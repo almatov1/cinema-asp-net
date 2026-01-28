@@ -1,22 +1,28 @@
 using Microsoft.AspNetCore.Mvc;
 using Cinema.Application.Services;
 using Cinema.Domain.DTOs;
-using Cinema.Api.Services;
 
 namespace Cinema.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public sealed class AuthController(AuthService authService, JwtTokenService jwtService) : ControllerBase
+public sealed class AuthController(AuthService authService) : ControllerBase
 {
     private readonly AuthService _authService = authService;
-    private readonly JwtTokenService _jwtService = jwtService;
 
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginRequest request)
     {
-        var user = await _authService.ValidateUserAsync(request.Login, request.Password);
-        var token = _jwtService.GenerateToken(user);
-        return Ok(new { access_token = token });
+        var response = await _authService.LoginAsync(request.Login, request.Password);
+        return Ok(response);
+    }
+
+    [HttpPost("refresh")]
+    public async Task<IActionResult> Refresh()
+    {
+        var refreshToken = Request.Cookies["refreshToken"];
+        if (string.IsNullOrEmpty(refreshToken)) return Unauthorized();
+        var response = await _authService.RefreshAsync(refreshToken);
+        return Ok(response);
     }
 }

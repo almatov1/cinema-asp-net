@@ -1,5 +1,7 @@
-using Cinema.Api.DependencyInjection;
+using Cinema.Api.Extensions;
 using Cinema.Api.Middleware;
+using Cinema.Application;
+using Cinema.Infrastructure;
 using Cinema.Infrastructure.Data;
 
 // Env
@@ -17,8 +19,9 @@ var builder = WebApplication.CreateBuilder(args);
 Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
 
 // Services
-builder.Services.AddApplicationServices(connectionString);
-builder.Services.AddInfrastructureServices();
+builder.Services.AddInfrastructure(connectionString);
+builder.Services.AddApplication();
+builder.Services.AddWebAuth();
 builder.Services.AddControllers();
 
 // Build app
@@ -37,6 +40,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 // JWT
+app.UseMiddleware<ExceptionMiddleware>();
 app.UseAuthentication();
 app.UseAuthorization();
 

@@ -1,19 +1,21 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using Cinema.Domain.Entities;
+using Cinema.Domain.Interfaces;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Cinema.Api.Services;
+namespace Cinema.Infrastructure.Services;
 
-public sealed class JwtTokenService
+public sealed class JwtTokenService : IJwtTokenService
 {
     private readonly string _secret;
     private readonly int _expiresMinutes;
 
     public JwtTokenService()
     {
-        _secret = Environment.GetEnvironmentVariable("JWT_SECRET") ?? "super-secret-key";
+        _secret = Environment.GetEnvironmentVariable("JWT_SECRET") ?? "fallback_very_long_secret_key";
         _expiresMinutes = int.TryParse(Environment.GetEnvironmentVariable("JWT_EXPIRES_MINUTES"), out var m) ? m : 60;
     }
 
@@ -36,5 +38,10 @@ public sealed class JwtTokenService
 
         var token = tokenHandler.CreateToken(tokenDescriptor);
         return tokenHandler.WriteToken(token);
+    }
+
+    public string GenerateRefreshToken()
+    {
+        return Convert.ToBase64String(RandomNumberGenerator.GetBytes(64));
     }
 }
