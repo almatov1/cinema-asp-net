@@ -1,3 +1,4 @@
+using Cinema.Domain.DTOs;
 using Cinema.Domain.Entities;
 using Cinema.Domain.Interfaces;
 using Cinema.Infrastructure.Data;
@@ -28,7 +29,7 @@ public sealed class UserRepository(DbConnectionFactory factory) : IUserRepositor
         using IDbConnection db = _factory.CreateConnection();
 
         const string sql = """
-            SELECT id, login, password_hash, created_at
+            SELECT id, login, role, password_hash, created_at
             FROM users
             WHERE login = @login;
         """;
@@ -41,11 +42,36 @@ public sealed class UserRepository(DbConnectionFactory factory) : IUserRepositor
         using IDbConnection db = _factory.CreateConnection();
 
         const string sql = """
-            SELECT id, login, password_hash, created_at
+            SELECT id, login, role, created_at
             FROM users
             WHERE id = @id;
         """;
 
         return await db.QueryFirstOrDefaultAsync<User>(sql, new { id });
+    }
+
+    public async Task<(IEnumerable<UserListItemDto> Users, int Total)>
+    GetPagedAsync(int page, int pageSize)
+    {
+        using IDbConnection db = _factory.CreateConnection();
+
+        var offset = (page - 1) * pageSize;
+
+        const string sql = """
+            SELECT id, login, role, created_at
+            FROM users
+            ORDER BY created_at DESC
+            LIMIT @pageSize OFFSET @offset;
+
+            SELECT COUNT(*) FROM users;
+        """;
+
+        using var multi = await db.QueryMultipleAsync(sql,
+            new { pageSize, offset });
+
+        var users = await multi.ReadAsync<UserListItemDto>();
+        var total = await multi.ReadSingleAsync<int>();
+
+        return (users, total);
     }
 }

@@ -18,6 +18,7 @@ public static class ApplicationServiceExtensions
         // Application Services
         services.AddScoped<UserService>();
         services.AddScoped<AuthService>();
+        services.AddScoped<AdminUserService>();
 
         return services;
     }
