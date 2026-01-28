@@ -23,11 +23,10 @@ public class UsersController(UserService userService) : ControllerBase
     [Authorize]
     public async Task<IActionResult> Get()
     {
-        var login = User.FindFirstValue(ClaimTypes.Name);
-        if (string.IsNullOrEmpty(login))
-            return Unauthorized();
+        var userIdClaim = User.FindFirstValue("id");
+        if (string.IsNullOrWhiteSpace(userIdClaim) || !Guid.TryParse(userIdClaim, out var userId)) return Unauthorized(new { message = "Invalid user ID in token" });
 
-        var user = await _userService.GetUserByLoginAsync(login);
+        var user = await _userService.GetUserByIdAsync(userId);
         return Ok(new { user.Id, user.Login, user.CreatedAt });
     }
 }

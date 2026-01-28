@@ -28,11 +28,24 @@ public sealed class UserRepository(DbConnectionFactory factory) : IUserRepositor
         using IDbConnection db = _factory.CreateConnection();
 
         const string sql = """
-            SELECT id, login, password_hash
+            SELECT id, login, password_hash, created_at
             FROM users
             WHERE login = @login;
         """;
 
         return await db.QueryFirstOrDefaultAsync<User>(sql, new { login });
+    }
+
+    public async Task<User?> GetByIdAsync(Guid id)
+    {
+        using IDbConnection db = _factory.CreateConnection();
+
+        const string sql = """
+            SELECT id, login, password_hash, created_at
+            FROM users
+            WHERE id = @id;
+        """;
+
+        return await db.QueryFirstOrDefaultAsync<User>(sql, new { id });
     }
 }

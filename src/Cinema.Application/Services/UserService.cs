@@ -25,9 +25,9 @@ public class UserService(IUserRepository repo)
         return user;
     }
 
-    public async Task<User> GetUserByLoginAsync(string login)
+    public async Task<User> GetUserByIdAsync(Guid id)
     {
-        var user = await _repo.GetByLoginAsync(login)
+        var user = await _repo.GetByIdAsync(id)
             ?? throw new Exception("User not found");
         return user;
     }
