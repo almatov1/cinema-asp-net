@@ -24,4 +24,11 @@ public class UserService(IUserRepository repo)
         await _repo.CreateAsync(user);
         return user;
     }
+
+    public async Task<User> GetUserByLoginAsync(string login)
+    {
+        var user = await _repo.GetByLoginAsync(login)
+            ?? throw new Exception("User not found");
+        return user;
+    }
 }
