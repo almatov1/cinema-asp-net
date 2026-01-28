@@ -1,0 +1,15 @@
+/Users/edauir/Desktop/projects/cinema-asp-net/src/Cinema.Application/bin/Debug/net10.0/Cinema.Application.deps.json
+/Users/edauir/Desktop/projects/cinema-asp-net/src/Cinema.Application/bin/Debug/net10.0/Cinema.Application.dll
+/Users/edauir/Desktop/projects/cinema-asp-net/src/Cinema.Application/bin/Debug/net10.0/Cinema.Application.pdb
+/Users/edauir/Desktop/projects/cinema-asp-net/src/Cinema.Application/bin/Debug/net10.0/Cinema.Domain.dll
+/Users/edauir/Desktop/projects/cinema-asp-net/src/Cinema.Application/bin/Debug/net10.0/Cinema.Domain.pdb
+/Users/edauir/Desktop/projects/cinema-asp-net/src/Cinema.Application/obj/Debug/net10.0/Cinema.Application.csproj.AssemblyReference.cache
+/Users/edauir/Desktop/projects/cinema-asp-net/src/Cinema.Application/obj/Debug/net10.0/Cinema.Application.GeneratedMSBuildEditorConfig.editorconfig
+/Users/edauir/Desktop/projects/cinema-asp-net/src/Cinema.Application/obj/Debug/net10.0/Cinema.Application.AssemblyInfoInputs.cache
+/Users/edauir/Desktop/projects/cinema-asp-net/src/Cinema.Application/obj/Debug/net10.0/Cinema.Application.AssemblyInfo.cs
+/Users/edauir/Desktop/projects/cinema-asp-net/src/Cinema.Application/obj/Debug/net10.0/Cinema.Application.csproj.CoreCompileInputs.cache
+/Users/edauir/Desktop/projects/cinema-asp-net/src/Cinema.Application/obj/Debug/net10.0/Cinema.A.B61B4880.Up2Date
+/Users/edauir/Desktop/projects/cinema-asp-net/src/Cinema.Application/obj/Debug/net10.0/Cinema.Application.dll
+/Users/edauir/Desktop/projects/cinema-asp-net/src/Cinema.Application/obj/Debug/net10.0/refint/Cinema.Application.dll
+/Users/edauir/Desktop/projects/cinema-asp-net/src/Cinema.Application/obj/Debug/net10.0/Cinema.Application.pdb
+/Users/edauir/Desktop/projects/cinema-asp-net/src/Cinema.Application/obj/Debug/net10.0/ref/Cinema.Application.dll
