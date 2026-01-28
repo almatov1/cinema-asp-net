@@ -3,14 +3,9 @@ using System.Data;
 
 namespace Cinema.Infrastructure.Data;
 
-public class DbConnectionFactory
+public class DbConnectionFactory(string connectionString)
 {
-    private readonly string _connectionString;
-
-    public DbConnectionFactory(string connectionString)
-    {
-        _connectionString = connectionString;
-    }
+    private readonly string _connectionString = connectionString;
 
     public IDbConnection CreateConnection() => new NpgsqlConnection(_connectionString);
 }

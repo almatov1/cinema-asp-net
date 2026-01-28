@@ -1,7 +1,6 @@
-using Cinema.Application.Services;
-using Cinema.Domain.Interfaces;
+using Cinema.Api.DependencyInjection;
+using Cinema.Api.Middleware;
 using Cinema.Infrastructure.Data;
-using Cinema.Infrastructure.Repositories;
 
 DotNetEnv.Env.Load("../../.env");
 
@@ -14,15 +13,16 @@ var connectionString = $"Host=localhost;Port={port};Database={db};Username={user
 
 // Builder
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddSingleton(new DbConnectionFactory(connectionString));
-builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<UserService>();
+Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
+builder.Services.AddApplicationServices(connectionString);
+builder.Services.AddInfrastructureServices();
 builder.Services.AddControllers();
 
 // Build app
 var app = builder.Build();
 MigrationRunner.Run(connectionString);
 app.MapControllers();
+app.UseMiddleware<ExceptionMiddleware>();
 if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 app.UseHttpsRedirection();

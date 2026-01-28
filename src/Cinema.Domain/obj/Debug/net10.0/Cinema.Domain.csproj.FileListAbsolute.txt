@@ -9,3 +9,4 @@
 /Users/edauir/Desktop/projects/cinema-asp-net/src/Cinema.Domain/obj/Debug/net10.0/refint/Cinema.Domain.dll
 /Users/edauir/Desktop/projects/cinema-asp-net/src/Cinema.Domain/obj/Debug/net10.0/Cinema.Domain.pdb
 /Users/edauir/Desktop/projects/cinema-asp-net/src/Cinema.Domain/obj/Debug/net10.0/ref/Cinema.Domain.dll
+/Users/edauir/Desktop/projects/cinema-asp-net/src/Cinema.Domain/obj/Debug/net10.0/Cinema.Domain.sourcelink.json

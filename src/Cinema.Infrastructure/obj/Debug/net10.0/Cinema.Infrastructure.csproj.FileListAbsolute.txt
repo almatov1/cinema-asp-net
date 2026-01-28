@@ -15,3 +15,4 @@
 /Users/edauir/Desktop/projects/cinema-asp-net/src/Cinema.Infrastructure/obj/Debug/net10.0/refint/Cinema.Infrastructure.dll
 /Users/edauir/Desktop/projects/cinema-asp-net/src/Cinema.Infrastructure/obj/Debug/net10.0/Cinema.Infrastructure.pdb
 /Users/edauir/Desktop/projects/cinema-asp-net/src/Cinema.Infrastructure/obj/Debug/net10.0/ref/Cinema.Infrastructure.dll
+/Users/edauir/Desktop/projects/cinema-asp-net/src/Cinema.Infrastructure/obj/Debug/net10.0/Cinema.Infrastructure.sourcelink.json

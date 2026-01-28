@@ -44,3 +44,12 @@
 /Users/edauir/Desktop/projects/cinema-asp-net/src/Cinema.Api/bin/Debug/net10.0/Sprache.dll
 /Users/edauir/Desktop/projects/cinema-asp-net/src/Cinema.Api/bin/Debug/net10.0/BCrypt.Net-Next.dll
 /Users/edauir/Desktop/projects/cinema-asp-net/src/Cinema.Api/bin/Debug/net10.0/Dapper.dll
+/Users/edauir/Desktop/projects/cinema-asp-net/src/Cinema.Api/bin/Debug/net10.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
+/Users/edauir/Desktop/projects/cinema-asp-net/src/Cinema.Api/bin/Debug/net10.0/Microsoft.IdentityModel.Abstractions.dll
+/Users/edauir/Desktop/projects/cinema-asp-net/src/Cinema.Api/bin/Debug/net10.0/Microsoft.IdentityModel.JsonWebTokens.dll
+/Users/edauir/Desktop/projects/cinema-asp-net/src/Cinema.Api/bin/Debug/net10.0/Microsoft.IdentityModel.Logging.dll
+/Users/edauir/Desktop/projects/cinema-asp-net/src/Cinema.Api/bin/Debug/net10.0/Microsoft.IdentityModel.Protocols.dll
+/Users/edauir/Desktop/projects/cinema-asp-net/src/Cinema.Api/bin/Debug/net10.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+/Users/edauir/Desktop/projects/cinema-asp-net/src/Cinema.Api/bin/Debug/net10.0/Microsoft.IdentityModel.Tokens.dll
+/Users/edauir/Desktop/projects/cinema-asp-net/src/Cinema.Api/bin/Debug/net10.0/System.IdentityModel.Tokens.Jwt.dll
+/Users/edauir/Desktop/projects/cinema-asp-net/src/Cinema.Api/obj/Debug/net10.0/Cinema.Api.sourcelink.json
