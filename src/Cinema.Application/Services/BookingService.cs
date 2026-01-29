@@ -29,11 +29,27 @@ public class BookingService(IBookingRepository repo)
         string? movieTitle,
         string? login)
     {
-        var (users, total) = await _repo.GetPagedAsync(page, pageSize, movieTitle, login);
+        var (bookings, total) = await _repo.GetPagedAsync(page, pageSize, movieTitle, login);
 
         return new PagedResult<BookingListItem>
         {
-            Items = users,
+            Items = bookings,
+            Total = total,
+            Page = page,
+            PageSize = pageSize
+        };
+    }
+
+    public async Task<PagedResult<BookingListItem>> GetBookingsByUserIAsync(
+        int page,
+        int pageSize,
+        Guid userId)
+    {
+        var (bookings, total) = await _repo.GetByUserIdPagedAsync(page, pageSize, userId);
+
+        return new PagedResult<BookingListItem>
+        {
+            Items = bookings,
             Total = total,
             Page = page,
             PageSize = pageSize

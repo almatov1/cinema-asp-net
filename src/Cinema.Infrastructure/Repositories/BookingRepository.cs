@@ -72,4 +72,49 @@ public sealed class BookingRepository(DbConnectionFactory factory) : IBookingRep
 
         return (bookings, total);
     }
+
+    public async Task<(IEnumerable<BookingListItem> Bookings, int Total)> GetByUserIdPagedAsync(
+        int page,
+        int pageSize,
+        Guid userId)
+    {
+        using IDbConnection db = _factory.CreateConnection();
+
+        var offset = (page - 1) * pageSize;
+
+        const string sql = """
+            SELECT 
+                b.id,
+                b.seat_number,
+                b.created_at,
+                b.session_id,
+                s.movie_title,
+                s.date_time,
+                b.user_id,
+                u.login
+            FROM bookings b
+            JOIN users u ON u.id = b.user_id
+            JOIN sessions s ON s.id = b.session_id
+            WHERE b.user_id = @UserId
+            ORDER BY b.created_at DESC;
+
+            SELECT COUNT(*) 
+            FROM bookings b
+            JOIN users u ON u.id = b.user_id
+            JOIN sessions s ON s.id = b.session_id
+            WHERE b.user_id = @UserId;
+        """;
+
+        using var multi = await db.QueryMultipleAsync(sql, new
+        {
+            pageSize,
+            offset,
+            UserId = userId
+        });
+
+        var bookings = await multi.ReadAsync<BookingListItem>();
+        var total = await multi.ReadSingleAsync<int>();
+
+        return (bookings, total);
+    }
 }

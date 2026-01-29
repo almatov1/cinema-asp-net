@@ -39,4 +39,21 @@ public class BookingsController(BookingService bookingService) : BaseApiControll
 
         return Ok(result);
     }
+
+    [HttpGet("my")]
+    [AuthorizeRoles(Role.User)]
+    public async Task<IActionResult> GetByUserIdPaged(
+        [FromQuery] int page = 1,
+        [FromQuery] int pageSize = 30)
+    {
+        if (page < 1 || pageSize is < 1 or > 100)
+            return BadRequest("Invalid paging");
+
+        var result = await _bookingService.GetBookingsByUserIAsync(
+            page,
+            pageSize,
+            UserId);
+
+        return Ok(result);
+    }
 }
