@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Cinema.Application.Services;
 using Cinema.Domain.DTOs;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace Cinema.Api.Controllers;
 
@@ -24,5 +26,18 @@ public sealed class AuthController(AuthService authService) : ControllerBase
         if (string.IsNullOrEmpty(refreshToken)) return Unauthorized();
         var response = await _authService.RefreshAsync(refreshToken);
         return Ok(response);
+    }
+
+    [Authorize]
+    [HttpPost("logout")]
+    public async Task<IActionResult> Logout()
+    {
+        var userId = User.FindFirstValue("id");
+
+        if (!Guid.TryParse(userId, out var guid))
+            return Unauthorized();
+
+        await _authService.LogoutAsync(guid);
+        return Ok();
     }
 }

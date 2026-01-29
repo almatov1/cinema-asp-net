@@ -48,4 +48,15 @@ public class RefreshTokenRepository(DbConnectionFactory factory) : IRefreshToken
             WHERE id = @id;
         """, new { id });
     }
+
+    public async Task RevokeByUserIdAsync(Guid userId)
+    {
+        using IDbConnection db = _factory.CreateConnection();
+
+        await db.ExecuteAsync("""
+            UPDATE refresh_tokens
+            SET revoked_at = now()
+            WHERE userId = @userId;
+        """, new { userId });
+    }
 }

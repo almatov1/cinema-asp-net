@@ -26,7 +26,7 @@ public sealed class AuthService(IUserRepository userRepo, IRefreshTokenRepositor
             Id = Guid.NewGuid(),
             UserId = user.Id,
             Token = refreshTokenValue,
-            ExpiresAt = DateTime.UtcNow.AddDays(7)
+            ExpiresAt = DateTime.UtcNow.AddDays(14)
         };
 
         await _refreshRepo.CreateAsync(refreshToken);
@@ -54,9 +54,14 @@ public sealed class AuthService(IUserRepository userRepo, IRefreshTokenRepositor
             Id = Guid.NewGuid(),
             UserId = user.Id,
             Token = newRefreshValue,
-            ExpiresAt = DateTime.UtcNow.AddDays(7)
+            ExpiresAt = DateTime.UtcNow.AddDays(14)
         });
 
         return new AuthResult(newAccess, newRefreshValue);
+    }
+
+    public async Task LogoutAsync(Guid userId)
+    {
+        await _refreshRepo.RevokeByUserIdAsync(userId);
     }
 }

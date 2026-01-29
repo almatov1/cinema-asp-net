@@ -3,6 +3,7 @@ using Cinema.Api.Middleware;
 using Cinema.Application;
 using Cinema.Infrastructure;
 using Cinema.Infrastructure.Data;
+using Microsoft.OpenApi;
 
 // Env
 DotNetEnv.Env.Load("../../.env");
@@ -23,6 +24,21 @@ builder.Services.AddInfrastructure(connectionString);
 builder.Services.AddApplication();
 builder.Services.AddWebAuth();
 builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.AddSecurityDefinition("bearer", new OpenApiSecurityScheme
+    {
+        Type = SecuritySchemeType.Http,
+        Scheme = "bearer",
+        BearerFormat = "JWT",
+        Description = "JWT Authorization header using the Bearer scheme."
+    });
+    options.AddSecurityRequirement(document => new OpenApiSecurityRequirement
+    {
+        [new OpenApiSecuritySchemeReference("bearer", document)] = []
+    });
+});
 
 // Build app
 var app = builder.Build();
@@ -33,9 +49,12 @@ MigrationRunner.Run(connectionString);
 // Middleware
 app.UseMiddleware<ExceptionMiddleware>();
 
-// Swagger
+// OpenApi
 if (app.Environment.IsDevelopment())
-    app.MapOpenApi();
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
 app.UseHttpsRedirection();
 
