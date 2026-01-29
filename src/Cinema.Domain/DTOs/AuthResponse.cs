@@ -1,6 +1,6 @@
 namespace Cinema.Domain.DTOs;
 
-public sealed record AuthResult(
+public sealed record AuthResponse(
     string AccessToken,
     string RefreshToken
 );

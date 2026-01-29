@@ -9,10 +9,6 @@ public class UserService(IUserRepository repo)
 
     public async Task<User> CreateUserAsync(string login, string password)
     {
-        var exists = await _repo.GetByLoginAsync(login);
-        if (exists != null)
-            throw new Exception("User already exists");
-
         var user = new User
         {
             Id = Guid.NewGuid(),

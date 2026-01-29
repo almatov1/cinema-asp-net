@@ -11,10 +11,12 @@ public static class InfrastructureExtensions
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, string connectionString)
     {
         services.AddSingleton(new DbConnectionFactory(connectionString));
+        services.AddSingleton<IJwtTokenService, JwtTokenService>();
+
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
-
-        services.AddSingleton<IJwtTokenService, JwtTokenService>();
+        services.AddScoped<ISessionRepository, SessionRepository>();
+        services.AddScoped<IBookingRepository, BookingRepository>();
         return services;
     }
 }

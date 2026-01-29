@@ -2,13 +2,12 @@ using Microsoft.AspNetCore.Mvc;
 using Cinema.Application.Services;
 using Cinema.Domain.DTOs;
 using Microsoft.AspNetCore.Authorization;
-using System.Security.Claims;
 
 namespace Cinema.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class UsersController(UserService userService) : ControllerBase
+public class UsersController(UserService userService) : BaseApiController
 {
     private readonly UserService _userService = userService;
 
@@ -23,10 +22,7 @@ public class UsersController(UserService userService) : ControllerBase
     [Authorize]
     public async Task<IActionResult> Get()
     {
-        var userIdClaim = User.FindFirstValue("id");
-        if (string.IsNullOrWhiteSpace(userIdClaim) || !Guid.TryParse(userIdClaim, out var userId)) return Unauthorized(new { message = "Invalid user ID in token" });
-
-        var user = await _userService.GetUserByIdAsync(userId);
+        var user = await _userService.GetUserByIdAsync(UserId);
         return Ok(new { user.Id, user.Login, user.CreatedAt });
     }
 }

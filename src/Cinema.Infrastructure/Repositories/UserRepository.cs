@@ -21,7 +21,8 @@ public sealed class UserRepository(DbConnectionFactory factory) : IUserRepositor
             RETURNING id;
         """;
 
-        return await db.ExecuteScalarAsync<Guid>(sql, user);
+        try { return await db.ExecuteScalarAsync<Guid>(sql, user); }
+        catch { throw new InvalidOperationException("User already exists"); }
     }
 
     public async Task<User?> GetByLoginAsync(string login)
@@ -50,7 +51,7 @@ public sealed class UserRepository(DbConnectionFactory factory) : IUserRepositor
         return await db.QueryFirstOrDefaultAsync<User>(sql, new { id });
     }
 
-    public async Task<(IEnumerable<UserListItemDto> Users, int Total)>
+    public async Task<(IEnumerable<UserListItem> Users, int Total)>
     GetPagedAsync(int page, int pageSize)
     {
         using IDbConnection db = _factory.CreateConnection();
@@ -69,7 +70,7 @@ public sealed class UserRepository(DbConnectionFactory factory) : IUserRepositor
         using var multi = await db.QueryMultipleAsync(sql,
             new { pageSize, offset });
 
-        var users = await multi.ReadAsync<UserListItemDto>();
+        var users = await multi.ReadAsync<UserListItem>();
         var total = await multi.ReadSingleAsync<int>();
 
         return (users, total);

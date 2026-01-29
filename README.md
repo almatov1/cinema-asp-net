@@ -71,3 +71,7 @@ Use it to explore and test API endpoints.
 docker-compose down
 docker-compose up --build -d
 ```
+
+## License
+
+This project is licensed with the [MIT license](LICENSE).

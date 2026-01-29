@@ -10,7 +10,7 @@ public sealed class AuthService(IUserRepository userRepo, IRefreshTokenRepositor
     private readonly IRefreshTokenRepository _refreshRepo = refreshRepo;
     private readonly IJwtTokenService _jwtService = jwtService;
 
-    public async Task<AuthResult> LoginAsync(string login, string password)
+    public async Task<AuthResponse> LoginAsync(string login, string password)
     {
         var user = await _userRepo.GetByLoginAsync(login)
              ?? throw new UnauthorizedAccessException("Invalid credentials");
@@ -30,10 +30,10 @@ public sealed class AuthService(IUserRepository userRepo, IRefreshTokenRepositor
         };
 
         await _refreshRepo.CreateAsync(refreshToken);
-        return new AuthResult(accessToken, refreshTokenValue);
+        return new AuthResponse(accessToken, refreshTokenValue);
     }
 
-    public async Task<AuthResult> RefreshAsync(string token)
+    public async Task<AuthResponse> RefreshAsync(string token)
     {
         var existingToken = await _refreshRepo.GetAsync(token)
             ?? throw new UnauthorizedAccessException("Invalid refresh token");
@@ -57,7 +57,7 @@ public sealed class AuthService(IUserRepository userRepo, IRefreshTokenRepositor
             ExpiresAt = DateTime.UtcNow.AddDays(14)
         });
 
-        return new AuthResult(newAccess, newRefreshValue);
+        return new AuthResponse(newAccess, newRefreshValue);
     }
 
     public async Task LogoutAsync(Guid userId)

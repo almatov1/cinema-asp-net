@@ -1,6 +1,6 @@
 namespace Cinema.Domain.DTOs;
 
-public class UserListItemDto
+public class UserListItem
 {
     public Guid Id { get; set; }
     public string Login { get; set; } = default!;

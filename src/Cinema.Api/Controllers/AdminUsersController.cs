@@ -1,12 +1,13 @@
+using Cinema.Api.Attributes;
 using Cinema.Application.Services;
-using Microsoft.AspNetCore.Authorization;
+using Cinema.Domain.Enums;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cinema.Api.Controllers;
 
 [ApiController]
 [Route("api/admin/users")]
-[Authorize(Roles = "Admin")]
+[AuthorizeRoles(Role.Admin)]
 public class AdminUsersController(AdminUserService service) : ControllerBase
 {
     private readonly AdminUserService _service = service;
