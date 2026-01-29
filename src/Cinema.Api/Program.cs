@@ -4,6 +4,7 @@ using Cinema.Application;
 using Cinema.Infrastructure;
 using Cinema.Infrastructure.Data;
 using Microsoft.OpenApi;
+using StackExchange.Redis;
 
 // Env
 DotNetEnv.Env.Load("../../.env");
@@ -24,6 +25,8 @@ builder.Services.AddInfrastructure(connectionString);
 builder.Services.AddApplication();
 builder.Services.AddWebAuth();
 builder.Services.AddControllers();
+
+// Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
@@ -38,6 +41,19 @@ builder.Services.AddSwaggerGen(options =>
     {
         [new OpenApiSecuritySchemeReference("bearer", document)] = []
     });
+});
+
+// Redis
+var redisPort = Environment.GetEnvironmentVariable("REDIS_PORT") ?? "6379";
+builder.Services.AddStackExchangeRedisCache(opt =>
+{
+    opt.Configuration = $"localhost:{redisPort}";
+    opt.InstanceName = "cinema:";
+});
+builder.Services.AddSingleton<IConnectionMultiplexer>(sp =>
+{
+    var configuration = $"localhost:{redisPort}";
+    return ConnectionMultiplexer.Connect(configuration);
 });
 
 // Build app

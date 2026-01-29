@@ -17,6 +17,8 @@ public static class InfrastructureExtensions
         services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
         services.AddScoped<ISessionRepository, SessionRepository>();
         services.AddScoped<IBookingRepository, BookingRepository>();
+        services.AddScoped<ICacheService, RedisCacheService>();
+        services.AddScoped<ICacheVersionService, RedisCacheVersionService>();
         return services;
     }
 }

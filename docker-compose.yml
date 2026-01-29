@@ -26,4 +26,9 @@ services:
     depends_on:
       - postgres_cinema
     restart: unless-stopped
+  redis_cinema:
+    container_name: redis_cinema
+    image: redis:8-alpine
+    ports:
+      - "${REDIS_PORT}:${REDIS_PORT}"
       
