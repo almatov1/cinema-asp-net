@@ -23,6 +23,6 @@ public class UsersController(UserService userService) : BaseApiController
     public async Task<IActionResult> Get()
     {
         var user = await _userService.GetUserByIdAsync(UserId);
-        return Ok(new { user.Id, user.Login, user.CreatedAt });
+        return Ok(new { user.Id, user.Login, user.Role, user.CreatedAt });
     }
 }

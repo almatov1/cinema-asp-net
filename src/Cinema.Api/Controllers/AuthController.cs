@@ -19,7 +19,7 @@ public sealed class AuthController(AuthService authService) : ControllerBase
         return Ok(response);
     }
 
-    [HttpPost("refresh")]
+    [HttpPatch("refresh")]
     public async Task<IActionResult> Refresh()
     {
         var refreshToken = Request.Cookies["refreshToken"];
@@ -29,7 +29,7 @@ public sealed class AuthController(AuthService authService) : ControllerBase
     }
 
     [Authorize]
-    [HttpPost("logout")]
+    [HttpDelete("logout")]
     public async Task<IActionResult> Logout()
     {
         var userId = User.FindFirstValue("id");

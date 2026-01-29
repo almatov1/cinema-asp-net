@@ -9,6 +9,7 @@ public static class ApplicationExtensions
     {
         services.AddScoped<UserService>();
         services.AddScoped<AuthService>();
+        services.AddScoped<AdminUserService>();
         services.AddScoped<SessionService>();
         services.AddScoped<BookingService>();
         return services;

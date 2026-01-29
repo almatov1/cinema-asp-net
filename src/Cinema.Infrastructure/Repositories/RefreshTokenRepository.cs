@@ -56,7 +56,7 @@ public class RefreshTokenRepository(DbConnectionFactory factory) : IRefreshToken
         await db.ExecuteAsync("""
             UPDATE refresh_tokens
             SET revoked_at = now()
-            WHERE userId = @userId;
+            WHERE user_id = @userId;
         """, new { userId });
     }
 }

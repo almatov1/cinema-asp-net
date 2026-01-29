@@ -16,8 +16,8 @@ public sealed class BookingRepository(DbConnectionFactory factory) : IBookingRep
         using IDbConnection db = _factory.CreateConnection();
 
         const string sql = """
-            INSERT INTO bookings (session_id, seat_number)
-            VALUES (@SessionId, @SeatNumber)
+            INSERT INTO bookings (session_id, seat_number, user_id)
+            VALUES (@SessionId, @SeatNumber, @UserId)
             RETURNING id;
         """;
 

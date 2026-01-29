@@ -10,6 +10,8 @@ public class BookingService(IBookingRepository repo)
 
     public async Task<Booking> CreateBookingAsync(Guid sessionId, int seatNumber, Guid userId)
     {
+        if (seatNumber < 1 || seatNumber > 30) throw new Exception("Invalid seat number. Seat must be between 1 and 30");
+
         var booking = new Booking
         {
             Id = Guid.NewGuid(),

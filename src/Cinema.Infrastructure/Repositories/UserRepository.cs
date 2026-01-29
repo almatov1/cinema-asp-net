@@ -66,9 +66,7 @@ public sealed class UserRepository(DbConnectionFactory factory) : IUserRepositor
             SELECT COUNT(*) FROM users;
         """;
 
-        using var multi = await db.QueryMultipleAsync(sql,
-            new { pageSize, offset });
-
+        using var multi = await db.QueryMultipleAsync(sql, new { pageSize, offset });
         var users = await multi.ReadAsync<UserListItem>();
         var total = await multi.ReadSingleAsync<int>();
 
