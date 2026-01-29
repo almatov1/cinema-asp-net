@@ -1,3 +1,4 @@
+using Cinema.Domain.DTOs;
 using Cinema.Domain.Entities;
 using Cinema.Domain.Interfaces;
 
@@ -19,5 +20,20 @@ public class SessionService(ISessionRepository repo)
 
         await _repo.CreateAsync(session);
         return session;
+    }
+
+    public async Task<PagedResult<SessionListItem>> GetSessionsAsync(
+    int page,
+    int pageSize)
+    {
+        var (sessions, total) = await _repo.GetPagedAsync(page, pageSize);
+
+        return new PagedResult<SessionListItem>
+        {
+            Items = sessions,
+            Total = total,
+            Page = page,
+            PageSize = pageSize
+        };
     }
 }

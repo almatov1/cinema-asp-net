@@ -51,8 +51,7 @@ public sealed class UserRepository(DbConnectionFactory factory) : IUserRepositor
         return await db.QueryFirstOrDefaultAsync<User>(sql, new { id });
     }
 
-    public async Task<(IEnumerable<UserListItem> Users, int Total)>
-    GetPagedAsync(int page, int pageSize)
+    public async Task<(IEnumerable<UserListItem> Users, int Total)> GetPagedAsync(int page, int pageSize)
     {
         using IDbConnection db = _factory.CreateConnection();
 
