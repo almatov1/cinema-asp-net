@@ -19,4 +19,24 @@ public class BookingsController(BookingService bookingService) : BaseApiControll
         var booking = await _bookingService.CreateBookingAsync(request.SessionId, request.SeatNumber, UserId);
         return Ok(booking);
     }
+
+    [HttpGet]
+    [AuthorizeRoles(Role.Manager)]
+    public async Task<IActionResult> GetPaged(
+        [FromQuery] int page = 1,
+        [FromQuery] int pageSize = 30,
+        [FromQuery] string? movieTitle = null,
+        [FromQuery] string? login = null)
+    {
+        if (page < 1 || pageSize is < 1 or > 100)
+            return BadRequest("Invalid paging");
+
+        var result = await _bookingService.GetBookingsAsync(
+            page,
+            pageSize,
+            movieTitle,
+            login);
+
+        return Ok(result);
+    }
 }

@@ -25,7 +25,7 @@ public class SessionsController(SessionService sessionService) : ControllerBase
     [Authorize]
     public async Task<IActionResult> GetAll(
      [FromQuery] int page = 1,
-     [FromQuery] int pageSize = 20)
+     [FromQuery] int pageSize = 30)
     {
         if (page < 1 || pageSize is < 1 or > 100)
             return BadRequest("Invalid paging");

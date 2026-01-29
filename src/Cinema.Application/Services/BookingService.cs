@@ -1,3 +1,4 @@
+using Cinema.Domain.DTOs;
 using Cinema.Domain.Entities;
 using Cinema.Domain.Interfaces;
 
@@ -20,5 +21,22 @@ public class BookingService(IBookingRepository repo)
 
         await _repo.CreateAsync(booking);
         return booking;
+    }
+
+    public async Task<PagedResult<BookingListItem>> GetBookingsAsync(
+        int page,
+        int pageSize,
+        string? movieTitle,
+        string? login)
+    {
+        var (users, total) = await _repo.GetPagedAsync(page, pageSize, movieTitle, login);
+
+        return new PagedResult<BookingListItem>
+        {
+            Items = users,
+            Total = total,
+            Page = page,
+            PageSize = pageSize
+        };
     }
 }

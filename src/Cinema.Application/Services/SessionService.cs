@@ -23,8 +23,8 @@ public class SessionService(ISessionRepository repo)
     }
 
     public async Task<PagedResult<SessionListItem>> GetSessionsAsync(
-    int page,
-    int pageSize)
+        int page,
+        int pageSize)
     {
         var (sessions, total) = await _repo.GetPagedAsync(page, pageSize);
 
